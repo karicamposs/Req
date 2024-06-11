@@ -90,23 +90,23 @@ class Scraper:
 
     # Método principal que orquesta la ejecución del scraping.
     def run(self, max_links=18):
-        if max_links > 18:
-            raise Exception(f"Solo se pueden maximos 18.")
-        else:
-            formatted_html = self.fetch_html()
+        #if max_links > 36:
+        #    raise Exception(f"Solo se pueden maximos 18.")
+        #else:
+        formatted_html = self.fetch_html()
             #self.save_html(formatted_html,"html_main.py")
-            news_links = self.extract_news_links(formatted_html, max_links)
-            self.create_folder("noticias")
+        news_links = self.extract_news_links(formatted_html, max_links)
+        self.create_folder("noticias")
             
-            datos_para_csv = []
+        datos_para_csv = []
 
-            for link in news_links:
-                self.url = link
-                formatted_html = self.fetch_html()
-                self.save_html(formatted_html,"noticias/" + str(link.replace("/","")) + ".html")
-                title, autor, texto_total  = self.extraer_informacion_html("noticias/" + str(link.replace("/","")) + ".html")
-                datos_para_csv.append([title,autor,texto_total])
+        for link in news_links:
+            self.url = link
+            formatted_html = self.fetch_html()
+            self.save_html(formatted_html,"noticias/" + str(link.replace("/","")) + ".html")
+            title, autor, texto_total  = self.extraer_informacion_html("noticias/" + str(link.replace("/","")) + ".html")
+            datos_para_csv.append([title,autor,texto_total])
 
-            self.guardar_en_csv(datos_para_csv, 'datos_noticias.csv')
+        self.guardar_en_csv(datos_para_csv, 'datos_noticias.csv')
 
-            self.eliminar_carpeta("noticias")
+        self.eliminar_carpeta("noticias")
